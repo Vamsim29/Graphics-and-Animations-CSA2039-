@@ -1,0 +1,91 @@
+//192011429 vamsi m\9.program to draw a line with digital differential algorithm(DDA)
+#include<GL/glu.h>
+#include<GL/glut.h>
+#include<stdlib.h>
+#include<stdio.h>
+float x1,x2,y1,y2;
+void MyInit()
+{
+glClearColor(1,0,0,1);
+glColor3f(0,0,1);
+glMatrixMode(GL_PROJECTION);
+glLoadIdentity();
+gluOrtho2D(-100,100,-100,100);
+}
+void draw()
+{
+     glClear(GL_COLOR_BUFFER_BIT);
+ glPointSize(3);
+
+     int i;
+    float qw,qe,m,a,b;
+ a=x1;
+ b=y1;
+ int g,h;
+ g=int(x1);
+ h=int(y1);
+ qw=y2-y1;
+ qe=x2-x1;
+ m=qw/qe;
+ if(m<1)
+ {
+     glBegin(GL_POINTS);
+     for(i=y1;i<y2;i++)
+     {
+         a=a+1;
+         b=b+m;
+         g=(int)(a);
+         h=(int)(b+0.5);
+         glVertex2f(g,h);
+     }
+     glEnd();
+ }
+ if(m>1)
+ {
+     glBegin(GL_POINTS);
+     for(i=y1;i<y2;i++)
+     {
+         a=a+(1/m);
+         b=b+1;
+         g=(int)(a+0.5);
+         h=(int)(b);
+         glVertex2f(g,h);
+     }
+     glEnd();
+ }
+ if(m==1)
+ {
+     glBegin(GL_POINTS);
+     for(i=y1;i<y2;i++)
+     {
+         a=a+1;
+         b=b+1;
+         g=(int)(a+0.5);
+         h=(int)(b);
+         glVertex2f(g,h);
+     }
+     glEnd();
+ }
+
+ glFlush();
+}
+int main(int c, char *v[])
+{
+ glutInit(&c,v);
+ glutInitWindowPosition(300,300);
+ glutInitWindowSize(500,500);
+ glutInitDisplayMode(GLUT_RGB|GLUT_SINGLE);
+ glutCreateWindow("Hello world");
+ printf("Enter the value of x1:-");
+ scanf("%f",&x1);
+ printf("Enter the value of y1:-");
+ scanf("%f",&y1);
+ printf("Enter the value of x2:-");
+ scanf("%f",&x2);
+ printf("Enter the value of y2:-");
+ scanf("%f",&y2);
+  MyInit();
+ glutDisplayFunc(draw);
+ glutMainLoop();
+ return 0;
+}
