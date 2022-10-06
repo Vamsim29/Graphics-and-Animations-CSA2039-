@@ -1,0 +1,45 @@
+//vamsi 192011429\13.Program for scalling of an 2d  polygon
+#include <windows.h>
+#include <GL/glut.h>
+
+void initGL() {
+
+   glClearColor(0.0, 0.0, 0.0, 1.0);
+}
+
+void display() {
+   glClear(GL_COLOR_BUFFER_BIT);
+
+   glBegin(GL_TRIANGLES);
+      glColor3f(0.0, 0.0, 1.0);
+      glVertex2f(-0.2,0.2);
+      glVertex2f(0,0.2);
+      glVertex2f(0,0);
+      glVertex2f(-0.2,0);
+   glEnd();
+
+   glTranslatef(0.2, -0.3, 0.0);
+   glScalef(2.0, 2.0, 2.0);
+      glBegin(GL_TRIANGLES);
+      glColor3f(1.0, 0.0, 0.0);
+       glVertex2f(-0.2,0.2);
+      glVertex2f(0,0.2);
+      glVertex2f(0,0);
+      glVertex2f(-0.2,0);
+   glEnd();
+
+   glFlush();
+}
+
+
+int main(int argc, char** argv) {
+   glutInit(&argc, argv);
+   glutInitWindowSize(600,600);
+   glutInitWindowPosition(200,100);
+   glutCreateWindow("Scaling of a polygon");
+   glutDisplayFunc(display);
+
+   initGL();
+   glutMainLoop();
+   return 0;
+}
