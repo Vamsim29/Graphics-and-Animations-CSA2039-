@@ -1,0 +1,102 @@
+//shearing of an triangle.. Taking the co-ordinates of the triangle form user.
+//vamsi 192011429\program 14.program to create shearing of an object....
+#include<GL/glu.h>
+#include<GL/glut.h>
+#include<windows.h>
+#include<stdio.h>
+#include<stdlib.h>
+double arr[6];
+int shx,shy;
+void MyInit()
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+    glClearColor(0,0,0,1);
+    glColor3f(1,0,1);
+    gluOrtho2D(-500,500,-500,500);
+}
+void triangle()
+{
+    glColor3f(1,0,0);
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(arr[0],arr[1]);
+    glVertex2f(arr[2],arr[3]);
+    glVertex2f(arr[4],arr[5]);
+    glEnd();
+
+
+    glFlush();
+}
+void coordinates()
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+    glPointSize(4);
+    glBegin(GL_LINES);
+    glColor3f(1,1,0);
+    glVertex2f(-500,0);
+    glVertex2f(500,0);
+
+    glVertex2f(0,500);
+    glVertex2f(0,-500);
+    glEnd();
+
+    glBegin(GL_POINTS);
+    glColor3f(1,1,1);
+    glVertex2f(0,0);
+    glEnd();
+
+    glFlush();
+}
+void shearing_x()
+{
+    int i;
+    for(i=0;i<6;i=i+2)
+    {
+        arr[i]=arr[i]+shx*arr[i+1];
+    }
+    triangle();
+}
+void shearing_y()
+{
+    int i;
+    for(i=1;i<6;i=i+2)
+    {
+        arr[i]=arr[i]+shy*arr[i-1];
+    }
+    triangle();
+}
+int main(int c,char* v[])
+{
+    int j,r=0;
+    glutInit(&c,v);
+    glutInitWindowSize(500,500);
+    glutInitWindowPosition(200,100);
+    glutCreateWindow("Creating a window");
+    printf("Enter the co-ordinates of the triangle  one by one x and y for each of three points");
+    for(j=0;j<6;j++)
+    {
+        scanf("%d",&arr[j]);
+    }
+    printf("Enter the shearing co-ordinate of x >");
+    scanf("%d",&shx);
+    printf("Enter the shearing co-ordinate of x >");
+    scanf("%d",&shy);
+    printf("Enter 1 for printing polygon,,Enter 2 for shearing along x-axis,,Enter 3 for shearing along y-axis");
+    scanf("%d",&r);
+    MyInit();
+    glutDisplayFunc(coordinates);
+    if(r==0||r==1)
+    {
+        triangle();
+    }
+    if(r==2)
+    {
+       shearing_x();
+    }
+    if(r==3)
+    {
+        shearing_y();
+    }
+
+    glutMainLoop();
+    return 0;
+}
