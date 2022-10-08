@@ -1,0 +1,93 @@
+//2D refleciton
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+#include<windows.h>
+#include<GL/glu.h>
+#include<GL/glut.h>
+double arr[6];
+void MyInit()
+{
+    glClearColor(0,0,0,1);
+    glColor3f(1,0,0);
+    gluOrtho2D(-500,500,-500,500);
+}
+void coordinats()
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+    glBegin(GL_LINES);
+    glColor3f(1,0,1);
+    glVertex2f(-500,0);
+    glVertex2f(500,0);
+    
+    glVertex2f(0,500);
+    glVertex2f(0,-500);
+    
+    glEnd();
+    
+    glBegin(GL_POINTS);
+    glColor3f(1,1,1);
+    glVertex2f(0,0);
+
+
+}
+void triangle()
+{
+    glColor3f(0,1,0);
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(arr[0],arr[1]);
+    glVertex2f(arr[2],arr[3]);
+    glVertex2f(arr[4],arr[5]);
+    glEnd();
+    glFlush();
+}
+//reflection along x axis
+void reflection_x()
+{
+    int i;
+    for(i=1;i<6;i=i+2)
+    {
+        arr[i]=-arr[i];
+    }
+    triangle();
+}
+void reflection_y()
+{
+    int j;
+    for(j=0;j<6;j=j+2)
+    {
+        arr[j]=-arr[j];
+    }
+    triangle();
+}
+int main(int c,char *v[])
+{
+    glutInit(&c,v);
+    glutInitWindowPosition(200,100);
+    glutInitWindowSize(500,500);
+    glutCreateWindow("Hello World");
+    printf("Enter the co ordinates of the points one by one x first then y second");
+    int k,r=0;
+    MyInit();
+    glutDisplayFunc(draw);
+    for(k=0;k<6;k++)
+    {
+        scanf("%d",&arr[k]);
+    }
+    printf("Enter 1 for printing polygon, 2 for reflection along x axis, 3 for reflection along y axis");
+    scanf("%d",&r);
+    if(r==1)
+    {
+        triangle();
+    }
+    if(r==2)
+    {
+        reflection_x();
+    }
+    if(r==3)
+    {
+        reflection_y();
+    }
+    glutMainLoop();
+    return 0;
+}
